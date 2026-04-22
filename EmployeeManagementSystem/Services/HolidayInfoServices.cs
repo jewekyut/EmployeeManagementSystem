@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Data;
 using EmployManagementSystemAPIs.Connection;
 using System.Collections.Generic;
@@ -9,69 +9,78 @@ using System.Linq;
 
 namespace EmployManagementSystemAPIs.Services.HolidayInfoServices
 {
-     class HolidayInfoServices 
+    class HolidayInfoServices
     {
         public async Task<List<HolidayInfo>> GetAllHolidayInfo()
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                var holidayinfo = await connection.QueryAsync<HolidayInfo>("GetAllHolidayInfo", null, commandType: CommandType.StoredProcedure);
+                var holidayinfo = await connection.QueryAsync<HolidayInfo>(
+                    "SELECT * FROM HolidayInfo");
                 return holidayinfo.ToList();
             }
         }
+
         public async Task<HolidayInfo> GetHolidayInfoById(int id)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id", id);
-                var holidayinfo = await connection.QueryAsync<HolidayInfo>("GetHolidayInfoById", parameters, commandType: CommandType.StoredProcedure);
+                var holidayinfo = await connection.QueryAsync<HolidayInfo>(
+                    "SELECT * FROM HolidayInfo WHERE Id = @Id",
+                    new { Id = id });
                 return holidayinfo.FirstOrDefault();
             }
         }
+
         public async Task<int> PostHolidayInfo(HolidayInfo holidayinfo)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();             
-                parameters.Add("@HolidayMonth", holidayinfo.HolidayMonth);
-                parameters.Add("@Holidays", holidayinfo.Holidays);
-                parameters.Add("@Leaves", holidayinfo.Leaves);
-                parameters.Add("@TotalHolidays", holidayinfo.TotalHolidays);
-                parameters.Add("@BasicId", holidayinfo.BasicId);
-                parameters.Add("@LastInsertedId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                await connection.ExecuteAsync("PostHolidayInfo", parameters, commandType: CommandType.StoredProcedure);
-                int LastInsertedId = parameters.Get<int>("@LastInsertedId");
-                return LastInsertedId;
+                var result = await connection.ExecuteAsync(
+                    "INSERT INTO HolidayInfo (HolidayMonth, Holidays, Leaves, TotalHolidays, BasicId) " +
+                    "VALUES (@HolidayMonth, @Holidays, @Leaves, @TotalHolidays, @BasicId)",
+                    new
+                    {
+                        holidayinfo.HolidayMonth,
+                        holidayinfo.Holidays,
+                        holidayinfo.Leaves,
+                        holidayinfo.TotalHolidays,
+                        holidayinfo.BasicId
+                    });
+                return result;
             }
         }
 
         public async Task<int> UpdateHolidayInfo(HolidayInfo holidayinfo)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@HolidayMonth", holidayinfo.HolidayMonth);
-                parameters.Add("@Holidays", holidayinfo.Holidays);
-                parameters.Add("@Leaves", holidayinfo.Leaves);
-                parameters.Add("@TotalHolidays", holidayinfo.TotalHolidays);
-                parameters.Add("@BasicId", holidayinfo.BasicId);
-                parameters.Add("@Id", holidayinfo.Id);
-                var result = await connection.ExecuteAsync("UpdateHolidayInfo", parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.ExecuteAsync(
+                    "UPDATE HolidayInfo SET HolidayMonth=@HolidayMonth, Holidays=@Holidays, " +
+                    "Leaves=@Leaves, TotalHolidays=@TotalHolidays, BasicId=@BasicId " +
+                    "WHERE Id=@Id",
+                    new
+                    {
+                        holidayinfo.HolidayMonth,
+                        holidayinfo.Holidays,
+                        holidayinfo.Leaves,
+                        holidayinfo.TotalHolidays,
+                        holidayinfo.BasicId,
+                        holidayinfo.Id
+                    });
                 return result;
             }
         }
+
         public async Task<int> DeleteHolidayInfo(int Id)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id", Id);
-                var result = await connection.ExecuteAsync("DeleteHolidayInfo", parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.ExecuteAsync(
+                    "DELETE FROM HolidayInfo WHERE Id = @Id",
+                    new { Id });
                 return result;
             }
         }
     }
 }
-
-

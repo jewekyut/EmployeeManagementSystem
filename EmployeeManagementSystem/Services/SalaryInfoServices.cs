@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Data;
 using EmployManagementSystemAPIs.Connection;
 using System.Threading.Tasks;
@@ -9,66 +9,78 @@ using System.Linq;
 
 namespace EmployManagementSystemAPIs.Services.SalaryInfoServices
 {
-     class SalaryInfoServices 
+    class SalaryInfoServices
     {
         public async Task<List<SalaryInfo>> GetAllSalaryInfo()
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                var salaryinfo = await connection.QueryAsync<SalaryInfo>("GetAllSalaryInfo", null, commandType: CommandType.StoredProcedure);
+                var salaryinfo = await connection.QueryAsync<SalaryInfo>(
+                    "SELECT * FROM SalaryInfo");
                 return salaryinfo.ToList();
             }
         }
+
         public async Task<SalaryInfo> GetSalaryInfoById(int id)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id", id);
-                var salaryinfo = await connection.QueryAsync<SalaryInfo>("GetSalaryInfoById", parameters, commandType: CommandType.StoredProcedure);
+                var salaryinfo = await connection.QueryAsync<SalaryInfo>(
+                    "SELECT * FROM SalaryInfo WHERE Id = @Id",
+                    new { Id = id });
                 return salaryinfo.FirstOrDefault();
             }
         }
+
         public async Task<int> PostSalaryInfo(SalaryInfo salaryinfo)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@SalaryMonth", salaryinfo.SalaryMonth);
-                parameters.Add("@BasicSalary", salaryinfo.BasicSalary);
-                parameters.Add("@Allowance", salaryinfo.Allowance);
-                parameters.Add("@Bonus", salaryinfo.Bonus);
-                parameters.Add("@TotalSalary", salaryinfo.TotalSalary);
-                parameters.Add("@BasicId", salaryinfo.BasicId);
-                parameters.Add("@LastInsertedId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                await connection.ExecuteAsync("PostSalaryInfo", parameters, commandType: CommandType.StoredProcedure);
-                int LastInsertedId = parameters.Get<int>("@LastInsertedId");
-                return LastInsertedId;
-            }
-        }
-        public async Task<int> UpdateSalaryInfo(SalaryInfo salaryinfo)
-        {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
-            {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@SalaryMonth", salaryinfo.SalaryMonth);
-                parameters.Add("@BasicSalary", salaryinfo.BasicSalary);
-                parameters.Add("@Allowance", salaryinfo.Allowance);
-                parameters.Add("@Bonus", salaryinfo.Bonus);
-                parameters.Add("@TotalSalary", salaryinfo.TotalSalary);
-                parameters.Add("@BasicId", salaryinfo.BasicId);
-                parameters.Add("@Id", salaryinfo.Id);
-                var result = await connection.ExecuteAsync("UpdateSalaryInfo", parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.ExecuteAsync(
+                    "INSERT INTO SalaryInfo (SalaryMonth, BasicSalary, Allowance, Bonus, TotalSalary, BasicId) " +
+                    "VALUES (@SalaryMonth, @BasicSalary, @Allowance, @Bonus, @TotalSalary, @BasicId)",
+                    new
+                    {
+                        salaryinfo.SalaryMonth,
+                        salaryinfo.BasicSalary,
+                        salaryinfo.Allowance,
+                        salaryinfo.Bonus,
+                        salaryinfo.TotalSalary,
+                        salaryinfo.BasicId
+                    });
                 return result;
             }
         }
+
+        public async Task<int> UpdateSalaryInfo(SalaryInfo salaryinfo)
+        {
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
+            {
+                var result = await connection.ExecuteAsync(
+                    "UPDATE SalaryInfo SET SalaryMonth=@SalaryMonth, BasicSalary=@BasicSalary, " +
+                    "Allowance=@Allowance, Bonus=@Bonus, TotalSalary=@TotalSalary, BasicId=@BasicId " +
+                    "WHERE Id=@Id",
+                    new
+                    {
+                        salaryinfo.SalaryMonth,
+                        salaryinfo.BasicSalary,
+                        salaryinfo.Allowance,
+                        salaryinfo.Bonus,
+                        salaryinfo.TotalSalary,
+                        salaryinfo.BasicId,
+                        salaryinfo.Id
+                    });
+                return result;
+            }
+        }
+
         public async Task<int> DeleteSalaryInfo(int Id)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id", Id);
-                var result = await connection.ExecuteAsync("DeleteSalaryInfo", parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.ExecuteAsync(
+                    "DELETE FROM SalaryInfo WHERE Id = @Id",
+                    new { Id });
                 return result;
             }
         }
