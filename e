@@ -1,0 +1,29 @@
+[33mcommit e02a3e511874c9c02ca075e5978ba8f59df1fd5a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: jewekyut <jewemalubay@gmail.com>
+Date:   Wed Apr 22 14:34:30 2026 +0800
+
+    Migrated BasicInfoServices from SQL Server to MySQL
+
+[33mcommit 82e690c97fb4bec5f8c0d7e69b84c61dc845e739[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: muhammadmudassar12 <muhammadmudassar7353@outlook.com>
+Date:   Sat Feb 17 10:50:01 2024 +0500
+
+    All Forms are added
+
+[33mcommit fbff3c32b420249f3c478c131e554734a52be8c4[m
+Author: muhammadmudassar12 <muhammadmudassar7353@outlook.com>
+Date:   Sat Feb 10 12:31:34 2024 +0500
+
+    All other Information's (EmgContactInfo, HolidayInfo, SalaryInfo) Services and Models are added.
+
+[33mcommit eaa682a5cc150fa7f4b179991650be6015e14212[m
+Author: muhammadmudassar12 <muhammadmudassar7353@outlook.com>
+Date:   Sat Feb 10 11:42:07 2024 +0500
+
+    Add project files.
+
+[33mcommit 1c7f710e2c57e493deef5f5337e34a328560cc25[m
+Author: muhammadmudassar12 <muhammadmudassar7353@outlook.com>
+Date:   Sat Feb 10 11:42:03 2024 +0500
+
+    Add .gitignore and .gitattributes.

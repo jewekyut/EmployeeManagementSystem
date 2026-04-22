@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementSystem.Models
 {
-    internal class Employee
+    public class Employee
     {
         public string emp_id { get; set; }
         public string emp_firstname { get; set; }

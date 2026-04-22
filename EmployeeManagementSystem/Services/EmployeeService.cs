@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using EmployeeManagementSystem.Models;
 
 namespace EmployeeManagementSystem.Services
 {
-    internal class EmployeeService
+    public class EmployeeService
     {
         private static readonly HttpClient client = new HttpClient();
         private const string apiUrl = "http://localhost/payrollproject/index.php/employeeapi/getEmployees";
