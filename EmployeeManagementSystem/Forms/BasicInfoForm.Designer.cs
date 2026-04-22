@@ -301,9 +301,9 @@ namespace EmployeeManagementSystem
             // 
             // btnSync
             // 
-            this.btnSync.Location = new System.Drawing.Point(288, 227);
+            this.btnSync.Location = new System.Drawing.Point(271, 242);
             this.btnSync.Name = "btnSync";
-            this.btnSync.Size = new System.Drawing.Size(75, 23);
+            this.btnSync.Size = new System.Drawing.Size(114, 23);
             this.btnSync.TabIndex = 4;
             this.btnSync.Text = "Sync from Payroll";
             this.btnSync.UseVisualStyleBackColor = true;

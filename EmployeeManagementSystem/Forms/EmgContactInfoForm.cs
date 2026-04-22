@@ -38,7 +38,7 @@ namespace EmployeeManagementSystem
             emgcntInfo.EmgContactName = txtHolidyMnth.Text.Trim();
             emgcntInfo.EmgContactPhone = txtHoidays.Text.Trim();
             emgcntInfo.EmgContactEmail = txtLeaves.Text.Trim();
-            emgcntInfo.BasicId = Convert.ToInt32(txtBasicId.Text.Trim());
+            emgcntInfo.BasicId = Convert.ToInt32(txtEmpId.Text.Trim());
             int result = await ECobj.PostEmgContactInfo(emgcntInfo);
             if (result > 0)
             {
@@ -57,7 +57,7 @@ namespace EmployeeManagementSystem
             txtHolidyMnth.Clear();
             txtHoidays.Clear();
             txtLeaves.Clear();
-            txtBasicId.Clear();
+            txtEmpId.Clear();
         }
 
         private async void btnDelete_Click(object sender, EventArgs e)
@@ -88,11 +88,10 @@ namespace EmployeeManagementSystem
         {
             EmgContactInfoServices ECobj = new EmgContactInfoServices();
             EmgContactInfo emgcntInfo = new EmgContactInfo();
-            emgcntInfo.Id = Convert.ToInt32(txtEmpId.Text.Trim());
             emgcntInfo.EmgContactName = txtHolidyMnth.Text.Trim();
             emgcntInfo.EmgContactPhone = txtHoidays.Text.Trim();
             emgcntInfo.EmgContactEmail = txtLeaves.Text.Trim();
-            emgcntInfo.BasicId = Convert.ToInt32(txtBasicId.Text.Trim());
+            emgcntInfo.BasicId = Convert.ToInt32(txtEmpId.Text.Trim());
 
 
             if (txtEmpId.Text.Trim().Length == 0)
@@ -131,6 +130,9 @@ namespace EmployeeManagementSystem
 
         }
 
-        
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
