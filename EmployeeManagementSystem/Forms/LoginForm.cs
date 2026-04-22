@@ -40,7 +40,7 @@ namespace EmployeeManagementSystem.Forms
         {
             // In a real application, validate the credentials against a database or other authentication mechanism.
             // For demonstration purposes, consider hardcoding a username and password.
-            return username == "Mudassar" && password == "7353";
+            return username == "Jeruel" && password == "0212";
         }
 
 
