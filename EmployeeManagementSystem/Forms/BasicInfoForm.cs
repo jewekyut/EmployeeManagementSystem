@@ -1,18 +1,22 @@
 ﻿using EmployeeManagementSystem.Models;
+using EmployeeManagementSystem.Services;
 using EmployManagementSystemAPIs.Services.BasicInfoServices;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Windows.Forms;
+using EmployeeManagementSystem.Services;
+using EmployeeManagementSystem.Services;
+using EmployManagementSystemAPIs.Services.BasicInfoServices;
 
 namespace EmployeeManagementSystem
 {
@@ -155,6 +159,44 @@ namespace EmployeeManagementSystem
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private async void btnSync_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Step 1: Fetch from Payroll API
+                EmployeeService service = new EmployeeService();
+                var payrollEmployees = await service.GetEmployeesAsync();
+
+                // Step 2: Save each employee to local MySQL
+                BasicInfoServices dbService = new BasicInfoServices();
+                int count = 0;
+
+                foreach (var emp in payrollEmployees)
+                {
+                    BasicInfo info = new BasicInfo();
+                    info.Name = emp.emp_firstname + " " + emp.emp_lastname;
+                    info.Email = emp.emp_username;
+                    info.Address = emp.department;
+                    info.Gender = "Male";
+                    info.Position = emp.position;
+
+                    int result = await dbService.PostBasicInfo(info);
+                    if (result > 0) count++;
+                }
+
+                // Step 3: Refresh grid
+                populateBasicInfo();
+
+                MessageBox.Show($"Successfully synced {count} employees from Payroll System!",
+                    "Sync Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Sync failed: " + ex.Message,
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
     
