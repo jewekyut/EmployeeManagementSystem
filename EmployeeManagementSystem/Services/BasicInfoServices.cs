@@ -1,7 +1,7 @@
 ﻿using EmployeeManagementSystem.Models;
 using Dapper;
 using System.Data;
-using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Linq;
 using EmployManagementSystemAPIs.Connection;
@@ -9,67 +9,73 @@ using System.Threading.Tasks;
 
 namespace EmployManagementSystemAPIs.Services.BasicInfoServices
 {
-    class BasicInfoServices 
+    class BasicInfoServices
     {
         public async Task<List<BasicInfo>> GetAllBasicInfo()
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                var basicinfo = await connection.QueryAsync<BasicInfo>("GetAllBasicInfo", null, commandType: CommandType.StoredProcedure);
+                var basicinfo = await connection.QueryAsync<BasicInfo>("SELECT * FROM BasicInfo");
                 return basicinfo.ToList();
             }
         }
+
         public async Task<BasicInfo> GetBasicInfoById(int id)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id", id);
-                var basicinfo = await connection.QueryAsync<BasicInfo>("GetBasicInfoById", parameters, commandType: CommandType.StoredProcedure);
+                var basicinfo = await connection.QueryAsync<BasicInfo>(
+                    "SELECT * FROM BasicInfo WHERE Id = @Id", new { Id = id });
                 return basicinfo.FirstOrDefault();
             }
         }
+
         public async Task<int> PostBasicInfo(BasicInfo basicinfo)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Name", basicinfo.Name);
-                parameters.Add("@Email", basicinfo.Email);
-                parameters.Add("@Address", basicinfo.Address);
-                parameters.Add("@Gender", basicinfo.Gender);
-                parameters.Add("@Position", basicinfo.Position);
-                parameters.Add("@LastInsertedId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                await connection.ExecuteAsync("PostBasicInfo", parameters, commandType: CommandType.StoredProcedure);
-
-                int LastInsertedId = parameters.Get<int>("@LastInsertedId");
-
-                return LastInsertedId;
-            }
-        }
-        public async Task<int> UpdateBasicInfo(BasicInfo basicinfo)
-        {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
-            {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Name", basicinfo.Name);
-                parameters.Add("@Email", basicinfo.Email);
-                parameters.Add("@Address", basicinfo.Address);
-                parameters.Add("@Gender", basicinfo.Gender);
-                parameters.Add("@Position", basicinfo.Position);
-                parameters.Add("@Id", basicinfo.Id);
-                var result = await connection.ExecuteAsync("UpdateBasicInfo", parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.ExecuteAsync(
+                    "INSERT INTO BasicInfo (Name, Email, Address, Gender, Position) " +
+                    "VALUES (@Name, @Email, @Address, @Gender, @Position)",
+                    new
+                    {
+                        basicinfo.Name,
+                        basicinfo.Email,
+                        basicinfo.Address,
+                        basicinfo.Gender,
+                        basicinfo.Position
+                    });
                 return result;
             }
         }
+
+        public async Task<int> UpdateBasicInfo(BasicInfo basicinfo)
+        {
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
+            {
+                var result = await connection.ExecuteAsync(
+                    "UPDATE BasicInfo SET Name=@Name, Email=@Email, Address=@Address, " +
+                    "Gender=@Gender, Position=@Position WHERE Id=@Id",
+                    new
+                    {
+                        basicinfo.Name,
+                        basicinfo.Email,
+                        basicinfo.Address,
+                        basicinfo.Gender,
+                        basicinfo.Position,
+                        basicinfo.Id
+                    });
+                return result;
+            }
+        }
+
         public async Task<int> DeleteBasicInfo(int Id)
         {
-            using (IDbConnection connection = new SqlConnection(DBConnection.dbConnectionString))
+            using (IDbConnection connection = new MySqlConnection(DBConnection.dbConnectionString))
             {
-                DynamicParameters parameters = new DynamicParameters();
-                parameters.Add("@Id", Id);
-                var result = await connection.ExecuteAsync("DeleteBasicInfo", parameters, commandType: CommandType.StoredProcedure);
+                var result = await connection.ExecuteAsync(
+                    "DELETE FROM BasicInfo WHERE Id = @Id",
+                    new { Id });
                 return result;
             }
         }

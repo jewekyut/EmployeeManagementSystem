@@ -2,6 +2,6 @@
 {
     public class DBConnection
     {
-        public static string dbConnectionString = @"Data source = DESKTOP-5VILT95\SQLEXPRESS; Database=Emp_Management_System; User Id=sa; Password=Admin!2345;";
+        public static string dbConnectionString = "Server=localhost;Database=Emp_Management_System;Uid=root;Pwd=;";
     }
 }
