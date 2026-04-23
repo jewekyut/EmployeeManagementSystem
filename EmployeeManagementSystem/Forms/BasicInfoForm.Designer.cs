@@ -356,7 +356,7 @@ namespace EmployeeManagementSystem
             // 
             // btnSync
             // 
-            this.btnSync.Location = new System.Drawing.Point(271, 242);
+            this.btnSync.Location = new System.Drawing.Point(271, 337);
             this.btnSync.Name = "btnSync";
             this.btnSync.Size = new System.Drawing.Size(114, 23);
             this.btnSync.TabIndex = 4;
