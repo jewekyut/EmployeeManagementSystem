@@ -14,7 +14,7 @@ namespace EmployeeManagementSystem.Services
 
         public async Task<List<Employee>> GetEmployeesAsync()
         {
-            var response = await client.GetStringAsync($"{baseUrl}/getEmployees");
+            var response = await client.GetStringAsync($"{baseUrl}/getemployees");
             return JsonConvert.DeserializeObject<List<Employee>>(response);
         }
 
