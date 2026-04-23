@@ -1,203 +1,81 @@
 ﻿using EmployeeManagementSystem.Models;
 using EmployeeManagementSystem.Services;
-using EmployManagementSystemAPIs.Services.BasicInfoServices;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EmployeeManagementSystem.Services;
-using EmployeeManagementSystem.Services;
-using EmployManagementSystemAPIs.Services.BasicInfoServices;
 
 namespace EmployeeManagementSystem
 {
     public partial class BasicInfoForm : Form
     {
+        EmployeeService service = new EmployeeService();
+
         public BasicInfoForm()
         {
             InitializeComponent();
         }
-        public async void populateBasicInfo()
-        {
-            BasicInfoServices objBasicInfo = new BasicInfoServices();
-            var basicInfoList = await objBasicInfo.GetAllBasicInfo();
-            basicGridView.DataSource = basicInfoList;
 
-        }
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private async void BasicInformation_Load(object sender, EventArgs e)
         {
-
+            await LoadEmployees();
         }
 
-        private  void BasicInformation_Load(object sender, EventArgs e)
+        private async Task LoadEmployees()
         {
-            populateBasicInfo();
-        }
-
-        private void txtName_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
+            var employees = await service.GetEmployeesAsync();
+            basicGridView.DataSource = employees;
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            BasicInfoServices BDobj = new BasicInfoServices();
-            BasicInfo basicinfo = new BasicInfo();
-            basicinfo.Name = txtName.Text.Trim();
-            basicinfo.Email = txtEmail.Text.Trim();
-            basicinfo.Address = txtAddress.Text.Trim();
+            Employee emp = new Employee();
+            emp.emp_firstname = txtFirstName.Text.Trim();
+            emp.emp_lastname = txtLastName.Text.Trim();
+            emp.emp_middlename = txtMiddleName.Text.Trim();
+            emp.emp_username = txtUsername.Text.Trim();
+            emp.emp_email = txtEmail.Text.Trim();
+            emp.emp_contact = txtContact.Text.Trim();
+            emp.position = txtPosition.Text.Trim();
+            emp.department = txtDepartment.Text.Trim();
+            emp.gross_salary = Convert.ToInt32(txtGrossSalary.Text.Trim());
 
-            if (rdoFemale.Checked == true)
-                basicinfo.Gender = "Female";
+            var result = await service.AddEmployeeAsync(emp);
+            var response = JsonConvert.DeserializeObject<dynamic>(result);
+
+            if (response["status"] == "success")
+                MessageBox.Show("Employee saved successfully!", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
-                basicinfo.Gender = "Male";
+                MessageBox.Show("Error saving employee.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-
-            basicinfo.Position = cmbPosition.Text;
-          
-
-            int result = await BDobj.PostBasicInfo(basicinfo);
-            if (result > 0)
-            {
-                MessageBox.Show("Employee Basic Information saved successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);              
-            }
-            else
-            {
-                MessageBox.Show("Error found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            populateBasicInfo();
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            txtName.Clear();
-            txtEmail.Clear();
-            txtAddress.Clear();
-            rdoMale.Checked = false;
-            rdoFemale.Checked = false;
-            cmbPosition.SelectedValue = null;
+            await LoadEmployees();
         }
 
         private async void btnUpdate_Click(object sender, EventArgs e)
         {
-            BasicInfoServices BDobj = new BasicInfoServices();
-            BasicInfo basicinfo = new BasicInfo();
-            basicinfo.Id = Convert.ToInt32(txtEmpId.Text.Trim());
-            basicinfo.Name = txtName.Text.Trim();
-            basicinfo.Email = txtEmail.Text.Trim();
-            basicinfo.Address = txtAddress.Text.Trim();
-            if (rdoFemale.Checked == true)
-                basicinfo.Gender = "Female";
-            else
-                basicinfo.Gender = "Male";
-            basicinfo.Position = cmbPosition.Text;
-
             if (txtEmpId.Text.Trim().Length == 0)
             {
-                MessageBox.Show("Please enter Employ Id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }          
-
-            int result = await BDobj.UpdateBasicInfo(basicinfo);
-            if (result > 0)
-                MessageBox.Show("Employee Basic Information updated successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            else
-                MessageBox.Show("Error found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            populateBasicInfo();
-        }
-
-        private async void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (txtEmpId.Text.Trim().Length == 0)
-            {
-                MessageBox.Show("Employee Not Selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter Employee ID", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var confirmResult = MessageBox.Show("Are you sure to delete this Data ?",
-                                     "Confirm Delete!!",
-                                     MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes)
-            {
 
-                BasicInfoServices BDobj = new BasicInfoServices();
-                int id = Convert.ToInt32(txtEmpId.Text);
-                int result = await BDobj.DeleteBasicInfo(id);
-                if (result > 0)
-                    MessageBox.Show("Employee Basic Information deleted successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else
-                    MessageBox.Show("Error found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                populateBasicInfo();
-            }
-        }
+            Employee emp = new Employee();
+            emp.emp_id = Convert.ToInt32(txtEmpId.Text.Trim());
+            emp.emp_firstname = txtFirstName.Text.Trim();
+            emp.emp_lastname = txtLastName.Text.Trim();
+            emp.emp_middlename = txtMiddleName.Text.Trim();
+            emp.emp_username = txtUsername.Text.Trim();
+            emp.emp_email = txtEmail.Text.Trim();
+            emp.emp_contact = txtContact.Text.Trim();
+            emp.position = txtPosition.Text.Trim();
+            emp.department = txtDepartment.Text.Trim();
+            emp.gross_salary = Convert.ToInt32(txtGrossSalary.Text.Trim());
 
-        private void cmbPosition_SelectedIndexChanged(object sender, EventArgs e)
-        {
+            var result = await service.UpdateEmployeeAsync(emp);
+            var response = JsonConvert.DeserializeObject<dynamic>(result);
 
-        }
-
-        private void btnnext1_Click(object sender, EventArgs e)
-        {
-            EmgContactInfoForm emgcontactinfo = new EmgContactInfoForm();
-            this.Hide();
-            emgcontactinfo.Show();
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void btnSync_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // Step 1: Fetch from Payroll API
-                EmployeeService service = new EmployeeService();
-                var payrollEmployees = await service.GetEmployeesAsync();
-
-                // Step 2: Save each employee to local MySQL
-                BasicInfoServices dbService = new BasicInfoServices();
-                int count = 0;
-
-                foreach (var emp in payrollEmployees)
-                {
-                    BasicInfo info = new BasicInfo();
-                    info.Name = emp.emp_firstname + " " + emp.emp_lastname;
-                    info.Email = emp.emp_username;
-                    info.Address = emp.department;
-                    info.Gender = "Male";
-                    info.Position = emp.position;
-
-                    int result = await dbService.PostBasicInfo(info);
-                    if (result > 0) count++;
-                }
-
-                // Step 3: Refresh grid
-                populateBasicInfo();
-
-                MessageBox.Show($"Successfully synced {count} employees from Payroll System!",
-                    "Sync Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Sync failed: " + ex.Message,
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-    }
-    
-}
+            if (response["status"] == "success")
+                MessageBox.Show("Employee updated successfully!", "Success",
