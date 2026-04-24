@@ -133,6 +133,7 @@
     <Compile Include="Models\EmgContactInfo.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\HolidayInfo.cs" />
+    <Compile Include="Models\Payroll.cs" />
     <Compile Include="Models\SalaryInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

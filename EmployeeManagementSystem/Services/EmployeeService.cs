@@ -64,5 +64,27 @@ namespace EmployeeManagementSystem.Services
                 return await response.Content.ReadAsStringAsync();
             }
         }
+        public async Task<List<Payroll>> GetPayrollAsync(string emp_username)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(new { emp_username });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{baseUrl}/getPayroll", content);
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Payroll>>(result);
+            }
+        }
+
+        public async Task<string> AddPayrollAsync(Payroll payroll)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(payroll);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{baseUrl}/addPayroll", content);
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
     }
 }
