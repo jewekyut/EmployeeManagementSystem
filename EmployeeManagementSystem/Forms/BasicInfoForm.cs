@@ -115,34 +115,11 @@ namespace EmployeeManagementSystem
             }
         }
 
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            txtFirstName.Clear();
-            txtLastName.Clear();
-            txtMiddleName.Clear();
-            txtUsername.Clear();
-            txtEmail.Clear();
-            txtContact.Clear();
-            txtPosition.Clear();
-            txtDepartment.Clear();
-            txtGrossSalary.Clear();
-            txtEmpId.Clear();
-        }
+      
 
-        private async void btnSync_Click(object sender, EventArgs e)
-        {
-            await LoadEmployees();
-            MessageBox.Show("Employees synced from Payroll System!", "Sync Complete",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+       
 
-        private void btnnext1_Click(object sender, EventArgs e)
-        {
-            EmgContactInfoForm emgcontactinfo = new EmgContactInfoForm();
-            this.Hide();
-            emgcontactinfo.Show();
-        }
-
+    
         private void txtName_TextChanged(object sender, EventArgs e)
         {
 
@@ -194,6 +171,27 @@ namespace EmployeeManagementSystem
                 txtDepartment.Text = row.Cells["department"].Value?.ToString();
                 txtGrossSalary.Text = row.Cells["gross_salary"].Value?.ToString();
             }
+        }
+
+        private void btnRefresh_Click_1(object sender, EventArgs e)
+        {
+            txtFirstName.Clear();
+            txtLastName.Clear();
+            txtMiddleName.Clear();
+            txtUsername.Clear();
+            txtEmail.Clear();
+            txtContact.Clear();
+            txtPosition.Clear();
+            txtDepartment.Clear();
+            txtGrossSalary.Clear();
+            txtEmpId.Clear();
+        }
+
+        private void btnnext1_Click(object sender, EventArgs e)
+        {
+            EmgContactInfoForm emgcontactinfo = new EmgContactInfoForm();
+            this.Hide();
+            emgcontactinfo.Show();
         }
     }
 }

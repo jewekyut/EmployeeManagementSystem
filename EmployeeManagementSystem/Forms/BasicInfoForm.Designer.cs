@@ -57,7 +57,6 @@ namespace EmployeeManagementSystem
             this.txtEmpId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.basicGridView = new System.Windows.Forms.DataGridView();
-            this.btnSync = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.basicGridView)).BeginInit();
@@ -72,6 +71,7 @@ namespace EmployeeManagementSystem
             this.btnnext1.TabIndex = 0;
             this.btnnext1.Text = "Next";
             this.btnnext1.UseVisualStyleBackColor = true;
+            this.btnnext1.Click += new System.EventHandler(this.btnnext1_Click);
             // 
             // groupBox1
             // 
@@ -223,6 +223,7 @@ namespace EmployeeManagementSystem
             this.btnRefresh.TabIndex = 13;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click_1);
             // 
             // txtEmail
             // 
@@ -357,22 +358,12 @@ namespace EmployeeManagementSystem
             this.basicGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.basicGridView_CellClick);
             this.basicGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.basicGridView_CellContentClick);
             // 
-            // btnSync
-            // 
-            this.btnSync.Location = new System.Drawing.Point(271, 337);
-            this.btnSync.Name = "btnSync";
-            this.btnSync.Size = new System.Drawing.Size(114, 23);
-            this.btnSync.TabIndex = 4;
-            this.btnSync.Text = "Sync from Payroll";
-            this.btnSync.UseVisualStyleBackColor = true;
-            // 
             // BasicInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.HighlightText;
             this.ClientSize = new System.Drawing.Size(691, 533);
-            this.Controls.Add(this.btnSync);
             this.Controls.Add(this.basicGridView);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -409,7 +400,6 @@ namespace EmployeeManagementSystem
         private System.Windows.Forms.TextBox txtEmpId;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridView basicGridView;
-        private System.Windows.Forms.Button btnSync;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtUsername;
         private System.Windows.Forms.TextBox txtMiddleName;
