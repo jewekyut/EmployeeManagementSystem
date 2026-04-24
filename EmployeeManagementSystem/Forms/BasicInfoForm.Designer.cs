@@ -324,6 +324,7 @@ namespace EmployeeManagementSystem
             this.btnDelete.TabIndex = 14;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click_1);
             // 
             // txtEmpId
             // 
@@ -353,6 +354,8 @@ namespace EmployeeManagementSystem
             this.basicGridView.RowTemplate.Height = 28;
             this.basicGridView.Size = new System.Drawing.Size(656, 148);
             this.basicGridView.TabIndex = 3;
+            this.basicGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.basicGridView_CellClick);
+            this.basicGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.basicGridView_CellContentClick);
             // 
             // btnSync
             // 

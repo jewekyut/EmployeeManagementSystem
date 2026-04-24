@@ -38,7 +38,7 @@ namespace EmployeeManagementSystem
             emp.emp_contact = txtContact.Text.Trim();
             emp.position = txtPosition.Text.Trim();
             emp.department = txtDepartment.Text.Trim();
-            emp.gross_salary = Convert.ToInt32(txtGrossSalary.Text.Trim());
+            emp.gross_salary = string.IsNullOrEmpty(txtGrossSalary.Text.Trim()) ? 0 : Convert.ToInt32(txtGrossSalary.Text.Trim());
 
             var result = await service.AddEmployeeAsync(emp);
             var response = JsonConvert.DeserializeObject<dynamic>(result);
@@ -72,7 +72,7 @@ namespace EmployeeManagementSystem
             emp.emp_contact = txtContact.Text.Trim();
             emp.position = txtPosition.Text.Trim();
             emp.department = txtDepartment.Text.Trim();
-            emp.gross_salary = Convert.ToInt32(txtGrossSalary.Text.Trim());
+            emp.gross_salary = string.IsNullOrEmpty(txtGrossSalary.Text.Trim()) ? 0 : Convert.ToInt32(txtGrossSalary.Text.Trim());
 
             var result = await service.UpdateEmployeeAsync(emp);
             var response = JsonConvert.DeserializeObject<dynamic>(result);
@@ -86,7 +86,7 @@ namespace EmployeeManagementSystem
             await LoadEmployees();
         }
 
-        private async void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click_1(object sender, EventArgs e)
         {
             if (txtEmpId.Text.Trim().Length == 0)
             {
@@ -104,7 +104,7 @@ namespace EmployeeManagementSystem
                 var result = await service.DeleteEmployeeAsync(id);
                 var response = JsonConvert.DeserializeObject<dynamic>(result);
 
-                if (response["status"] == "success")
+                if (response["status"].ToString() == "success")
                     MessageBox.Show("Employee deleted successfully!", "Success",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else
@@ -156,6 +156,44 @@ namespace EmployeeManagementSystem
         private void groupBox2_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void basicGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = basicGridView.Rows[e.RowIndex];
+
+                txtEmpId.Text = row.Cells["emp_id"].Value?.ToString();
+                txtFirstName.Text = row.Cells["emp_firstname"].Value?.ToString();
+                txtLastName.Text = row.Cells["emp_lastname"].Value?.ToString();
+                txtMiddleName.Text = row.Cells["emp_middlename"].Value?.ToString();
+                txtUsername.Text = row.Cells["emp_username"].Value?.ToString();
+                txtEmail.Text = row.Cells["emp_email"].Value?.ToString();
+                txtContact.Text = row.Cells["emp_contact"].Value?.ToString();
+                txtPosition.Text = row.Cells["position"].Value?.ToString();
+                txtDepartment.Text = row.Cells["department"].Value?.ToString();
+                txtGrossSalary.Text = row.Cells["gross_salary"].Value?.ToString();
+            }
+        }
+
+        private void basicGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = basicGridView.Rows[e.RowIndex];
+
+                txtEmpId.Text = row.Cells["emp_id"].Value?.ToString();
+                txtFirstName.Text = row.Cells["emp_firstname"].Value?.ToString();
+                txtLastName.Text = row.Cells["emp_lastname"].Value?.ToString();
+                txtMiddleName.Text = row.Cells["emp_middlename"].Value?.ToString();
+                txtUsername.Text = row.Cells["emp_username"].Value?.ToString();
+                txtEmail.Text = row.Cells["emp_email"].Value?.ToString();
+                txtContact.Text = row.Cells["emp_contact"].Value?.ToString();
+                txtPosition.Text = row.Cells["position"].Value?.ToString();
+                txtDepartment.Text = row.Cells["department"].Value?.ToString();
+                txtGrossSalary.Text = row.Cells["gross_salary"].Value?.ToString();
+            }
         }
     }
 }
