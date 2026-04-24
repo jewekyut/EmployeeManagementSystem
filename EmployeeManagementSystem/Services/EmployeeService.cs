@@ -54,5 +54,15 @@ namespace EmployeeManagementSystem.Services
                 return await response.Content.ReadAsStringAsync();
             }
         }
+        public async Task<string> UpdateGovNumbersAsync(Employee emp)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(emp);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{baseUrl}/updateGovNumbers", content);
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
     }
 }

@@ -1,12 +1,7 @@
 ﻿using EmployeeManagementSystem.Models;
-using EmployManagementSystemAPIs.Services.EmgContactInfoServices;
+using EmployeeManagementSystem.Services;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,104 +9,63 @@ namespace EmployeeManagementSystem
 {
     public partial class EmgContactInfoForm : System.Windows.Forms.Form
     {
+        EmployeeService service = new EmployeeService();
+
         public EmgContactInfoForm()
         {
             InitializeComponent();
         }
-        public async void populateEmgContactInfo()
-        {
-            EmgContactInfoServices objEmgContactInfo = new EmgContactInfoServices();
-            var emgcntInfoList = await objEmgContactInfo.GetAllEmgContactInfo();
-            basicGridView.DataSource = emgcntInfoList;
 
+        private async void EmgContactInfoForm_Load(object sender, EventArgs e)
+        {
+            await LoadEmployees();
         }
-        private void EmgContactInfoForm_Load(object sender, EventArgs e)
-        {
-            populateEmgContactInfo();
 
+        private async Task LoadEmployees()
+        {
+            var employees = await service.GetEmployeesAsync();
+            basicGridView.DataSource = employees;
         }
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            EmgContactInfoServices ECobj = new EmgContactInfoServices();
-            EmgContactInfo emgcntInfo = new EmgContactInfo();
-            emgcntInfo.EmgContactName = txtHolidyMnth.Text.Trim();
-            emgcntInfo.EmgContactPhone = txtHoidays.Text.Trim();
-            emgcntInfo.EmgContactEmail = txtLeaves.Text.Trim();
-            emgcntInfo.BasicId = Convert.ToInt32(txtEmpId.Text.Trim());
-            int result = await ECobj.PostEmgContactInfo(emgcntInfo);
-            if (result > 0)
+            if (string.IsNullOrEmpty(txtEmpId.Text))
             {
-                MessageBox.Show("Employee Emergancy Contact Information saved successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Please select an employee first.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            else
-            {
-                MessageBox.Show("Error found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            populateEmgContactInfo();
 
+            Employee emp = new Employee();
+            emp.emp_id = Convert.ToInt32(txtEmpId.Text.Trim());
+            emp.tin_num = txtTinNum.Text.Trim();
+            emp.sss_num = txtSssNum.Text.Trim();
+            emp.pagibig_num = txtPagibigNum.Text.Trim();
+            emp.philhealth_num = txtPhilhealthNum.Text.Trim();
+
+            var result = await service.UpdateGovNumbersAsync(emp);
+            var response = JsonConvert.DeserializeObject<dynamic>(result);
+
+            if (response["status"].ToString() == "success")
+                MessageBox.Show("Government numbers updated successfully!", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show("Error updating.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            await LoadEmployees();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            txtHolidyMnth.Clear();
-            txtHoidays.Clear();
-            txtLeaves.Clear();
             txtEmpId.Clear();
+            txtTinNum.Clear();
+            txtSssNum.Clear();
+            txtPagibigNum.Clear();
+            txtPhilhealthNum.Clear();
         }
 
-        private async void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (txtEmpId.Text.Trim().Length == 0)
-            {
-                MessageBox.Show("Employee Not Selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            var confirmResult = MessageBox.Show("Are you sure to delete this Data ?",
-                                     "Confirm Delete!!",
-                                     MessageBoxButtons.YesNo);
-            if (confirmResult == DialogResult.Yes)
-            {
-
-                EmgContactInfoServices ECobj = new EmgContactInfoServices();
-                int id = Convert.ToInt32(txtEmpId.Text);
-                int result = await ECobj.DeleteEmgContactInfo(id);
-                if (result > 0)
-                    MessageBox.Show("Employee Emergancy Contact Information deleted successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else
-                    MessageBox.Show("Error found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                populateEmgContactInfo();
-            }
-        }
-
-        private async void btnUpdate_Click(object sender, EventArgs e)
-        {
-            EmgContactInfoServices ECobj = new EmgContactInfoServices();
-            EmgContactInfo emgcntInfo = new EmgContactInfo();
-            emgcntInfo.EmgContactName = txtHolidyMnth.Text.Trim();
-            emgcntInfo.EmgContactPhone = txtHoidays.Text.Trim();
-            emgcntInfo.EmgContactEmail = txtLeaves.Text.Trim();
-            emgcntInfo.BasicId = Convert.ToInt32(txtEmpId.Text.Trim());
-
-
-            if (txtEmpId.Text.Trim().Length == 0)
-            {
-                MessageBox.Show("Please enter Employ Id", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            int result = await ECobj.UpdateEmgContactInfo(emgcntInfo);
-            if (result > 0)
-                MessageBox.Show("Employee Emergancey Contact Information updated successfully", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            else
-                MessageBox.Show("Error found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            populateEmgContactInfo();
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void btnnext1_Click(object sender, EventArgs e)
         {
@@ -120,19 +74,17 @@ namespace EmployeeManagementSystem
             salaryinfo.Show();
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void basicGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
-        }
-
-        private void txtEmpId_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = basicGridView.Rows[e.RowIndex];
+                txtEmpId.Text = row.Cells["emp_id"].Value?.ToString();
+                txtTinNum.Text = row.Cells["tin_num"].Value?.ToString();
+                txtSssNum.Text = row.Cells["sss_num"].Value?.ToString();
+                txtPagibigNum.Text = row.Cells["pagibig_num"].Value?.ToString();
+                txtPhilhealthNum.Text = row.Cells["philhealth_num"].Value?.ToString();
+            }
         }
     }
 }

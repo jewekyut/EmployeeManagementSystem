@@ -23,5 +23,6 @@ namespace EmployeeManagementSystem.Models
         public int gross_salary { get; set; }
         public string position { get; set; }
         public string department { get; set; }
+      
     }
 }
