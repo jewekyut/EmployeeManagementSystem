@@ -1,5 +1,5 @@
 ﻿
-namespace EmployeeManagementSystem.Forms
+namespace EmployeeManagementSystem
 {
     partial class HolidayInfoForm
     {
@@ -30,17 +30,16 @@ namespace EmployeeManagementSystem.Forms
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.cmbStatus = new System.Windows.Forms.ComboBox();
+            this.dtpTimeOut = new System.Windows.Forms.DateTimePicker();
+            this.dtpTimeIn = new System.Windows.Forms.DateTimePicker();
+            this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.txtLeaves = new System.Windows.Forms.TextBox();
             this.lblTotalHolidays = new System.Windows.Forms.Label();
-            this.txtBasicId = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnRefresh = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtholidays = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnUpdate = new System.Windows.Forms.Button();
@@ -56,69 +55,90 @@ namespace EmployeeManagementSystem.Forms
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
+            this.groupBox1.Controls.Add(this.cmbStatus);
+            this.groupBox1.Controls.Add(this.dtpTimeOut);
+            this.groupBox1.Controls.Add(this.dtpTimeIn);
+            this.groupBox1.Controls.Add(this.dtpDate);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.txtLeaves);
             this.groupBox1.Controls.Add(this.lblTotalHolidays);
-            this.groupBox1.Controls.Add(this.txtBasicId);
             this.groupBox1.Controls.Add(this.btnSave);
             this.groupBox1.Controls.Add(this.btnRefresh);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtholidays);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(36, 23);
+            this.groupBox1.Location = new System.Drawing.Point(24, 15);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(364, 375);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(300, 244);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Employee Basic Information";
             // 
-            // dateTimePicker1
+            // cmbStatus
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(162, 81);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(167, 26);
-            this.dateTimePicker1.TabIndex = 19;
+            this.cmbStatus.FormattingEnabled = true;
+            this.cmbStatus.Items.AddRange(new object[] {
+            "Present",
+            "Absent",
+            "Late",
+            "Half Day"});
+            this.cmbStatus.Location = new System.Drawing.Point(97, 147);
+            this.cmbStatus.Name = "cmbStatus";
+            this.cmbStatus.Size = new System.Drawing.Size(198, 21);
+            this.cmbStatus.TabIndex = 7;
+            // 
+            // dtpTimeOut
+            // 
+            this.dtpTimeOut.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpTimeOut.Location = new System.Drawing.Point(97, 116);
+            this.dtpTimeOut.Name = "dtpTimeOut";
+            this.dtpTimeOut.Size = new System.Drawing.Size(198, 20);
+            this.dtpTimeOut.TabIndex = 20;
+            this.dtpTimeOut.Value = new System.DateTime(2026, 4, 24, 12, 19, 0, 0);
+            // 
+            // dtpTimeIn
+            // 
+            this.dtpTimeIn.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtpTimeIn.Location = new System.Drawing.Point(97, 81);
+            this.dtpTimeIn.Name = "dtpTimeIn";
+            this.dtpTimeIn.Size = new System.Drawing.Size(198, 20);
+            this.dtpTimeIn.TabIndex = 19;
+            this.dtpTimeIn.Value = new System.DateTime(2026, 4, 24, 12, 19, 0, 0);
+            // 
+            // dtpDate
+            // 
+            this.dtpDate.Location = new System.Drawing.Point(97, 49);
+            this.dtpDate.Name = "dtpDate";
+            this.dtpDate.Size = new System.Drawing.Size(198, 20);
+            this.dtpDate.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 188);
+            this.label4.Location = new System.Drawing.Point(17, 122);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 20);
+            this.label4.Size = new System.Drawing.Size(56, 13);
             this.label4.TabIndex = 18;
-            this.label4.Text = "Leaves";
-            // 
-            // txtLeaves
-            // 
-            this.txtLeaves.Location = new System.Drawing.Point(162, 182);
-            this.txtLeaves.Name = "txtLeaves";
-            this.txtLeaves.Size = new System.Drawing.Size(167, 26);
-            this.txtLeaves.TabIndex = 17;
+            this.label4.Text = "Time OUT";
             // 
             // lblTotalHolidays
             // 
             this.lblTotalHolidays.AutoSize = true;
             this.lblTotalHolidays.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lblTotalHolidays.Location = new System.Drawing.Point(158, 230);
+            this.lblTotalHolidays.Location = new System.Drawing.Point(105, 150);
+            this.lblTotalHolidays.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTotalHolidays.Name = "lblTotalHolidays";
-            this.lblTotalHolidays.Size = new System.Drawing.Size(0, 20);
+            this.lblTotalHolidays.Size = new System.Drawing.Size(0, 13);
             this.lblTotalHolidays.TabIndex = 16;
-            // 
-            // txtBasicId
-            // 
-            this.txtBasicId.Location = new System.Drawing.Point(162, 31);
-            this.txtBasicId.Name = "txtBasicId";
-            this.txtBasicId.Size = new System.Drawing.Size(61, 26);
-            this.txtBasicId.TabIndex = 15;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(209, 288);
+            this.btnSave.Location = new System.Drawing.Point(139, 187);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(2);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(120, 37);
+            this.btnSave.Size = new System.Drawing.Size(80, 24);
             this.btnSave.TabIndex = 14;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -126,56 +146,44 @@ namespace EmployeeManagementSystem.Forms
             // 
             // btnRefresh
             // 
-            this.btnRefresh.Location = new System.Drawing.Point(30, 292);
+            this.btnRefresh.Location = new System.Drawing.Point(20, 190);
+            this.btnRefresh.Margin = new System.Windows.Forms.Padding(2);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(115, 37);
+            this.btnRefresh.Size = new System.Drawing.Size(77, 24);
             this.btnRefresh.TabIndex = 13;
             this.btnRefresh.Text = "Refresh";
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 37);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(79, 20);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Employ Id";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 231);
+            this.label3.Location = new System.Drawing.Point(17, 150);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(112, 20);
+            this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Total Holidays ";
+            this.label3.Text = "Status ";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 86);
+            this.label2.Location = new System.Drawing.Point(17, 56);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(110, 20);
+            this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Holiday Month";
-            // 
-            // txtholidays
-            // 
-            this.txtholidays.Location = new System.Drawing.Point(162, 131);
-            this.txtholidays.Name = "txtholidays";
-            this.txtholidays.Size = new System.Drawing.Size(167, 26);
-            this.txtholidays.TabIndex = 1;
+            this.label2.Text = "Date";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 134);
+            this.label1.Location = new System.Drawing.Point(17, 87);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 20);
+            this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Holidays";
+            this.label1.Text = "Time IN";
             // 
             // groupBox2
             // 
@@ -184,67 +192,74 @@ namespace EmployeeManagementSystem.Forms
             this.groupBox2.Controls.Add(this.btnDelete);
             this.groupBox2.Controls.Add(this.txtEmpId);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(427, 23);
+            this.groupBox2.Location = new System.Drawing.Point(339, 15);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(281, 145);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(187, 94);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Changes";
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(150, 95);
+            this.btnUpdate.Location = new System.Drawing.Point(100, 62);
+            this.btnUpdate.Margin = new System.Windows.Forms.Padding(2);
             this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(97, 37);
+            this.btnUpdate.Size = new System.Drawing.Size(65, 24);
             this.btnUpdate.TabIndex = 15;
             this.btnUpdate.Text = "Update";
             this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(25, 95);
+            this.btnDelete.Location = new System.Drawing.Point(17, 62);
+            this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(97, 37);
+            this.btnDelete.Size = new System.Drawing.Size(65, 24);
             this.btnDelete.TabIndex = 14;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // txtEmpId
             // 
-            this.txtEmpId.Location = new System.Drawing.Point(73, 40);
+            this.txtEmpId.Location = new System.Drawing.Point(49, 26);
+            this.txtEmpId.Margin = new System.Windows.Forms.Padding(2);
             this.txtEmpId.Name = "txtEmpId";
-            this.txtEmpId.Size = new System.Drawing.Size(64, 26);
+            this.txtEmpId.Size = new System.Drawing.Size(44, 20);
             this.txtEmpId.TabIndex = 13;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(38, 46);
+            this.label6.Location = new System.Drawing.Point(25, 30);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(26, 20);
+            this.label6.Size = new System.Drawing.Size(18, 13);
             this.label6.TabIndex = 1;
             this.label6.Text = "ID";
             // 
             // basicGridView
             // 
             this.basicGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.basicGridView.Location = new System.Drawing.Point(12, 441);
+            this.basicGridView.Location = new System.Drawing.Point(8, 287);
+            this.basicGridView.Margin = new System.Windows.Forms.Padding(2);
             this.basicGridView.Name = "basicGridView";
             this.basicGridView.RowHeadersWidth = 62;
             this.basicGridView.RowTemplate.Height = 28;
-            this.basicGridView.Size = new System.Drawing.Size(984, 233);
+            this.basicGridView.Size = new System.Drawing.Size(656, 151);
             this.basicGridView.TabIndex = 6;
+            this.basicGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.basicGridView_CellContentClick);
             // 
             // HolidayInfoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1018, 686);
+            this.ClientSize = new System.Drawing.Size(679, 446);
             this.Controls.Add(this.basicGridView);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "HolidayInfoForm";
             this.Text = "HolidayInfoForm";
             this.Load += new System.EventHandler(this.HolidayInfoForm_Load);
@@ -260,17 +275,12 @@ namespace EmployeeManagementSystem.Forms
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txtLeaves;
         private System.Windows.Forms.Label lblTotalHolidays;
-        private System.Windows.Forms.TextBox txtBasicId;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnRefresh;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtholidays;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnUpdate;
@@ -278,5 +288,9 @@ namespace EmployeeManagementSystem.Forms
         private System.Windows.Forms.TextBox txtEmpId;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridView basicGridView;
+        private System.Windows.Forms.DateTimePicker dtpTimeIn;
+        private System.Windows.Forms.DateTimePicker dtpDate;
+        private System.Windows.Forms.ComboBox cmbStatus;
+        private System.Windows.Forms.DateTimePicker dtpTimeOut;
     }
 }

@@ -86,5 +86,27 @@ namespace EmployeeManagementSystem.Services
                 return await response.Content.ReadAsStringAsync();
             }
         }
+        public async Task<List<Attendance>> GetAttendanceAsync(int emp_id)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(new { emp_id });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{baseUrl}/getAttendance", content);
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<Attendance>>(result);
+            }
+        }
+
+        public async Task<string> AddAttendanceAsync(Attendance attendance)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(attendance);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{baseUrl}/addAttendance", content);
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
     }
 }

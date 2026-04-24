@@ -284,7 +284,6 @@ namespace EmployeeManagementSystem
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.TextBox txtEmpId;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtBasicId;
         private System.Windows.Forms.DataGridView basicGridView;
         private System.Windows.Forms.Button btnnext1;
         private System.Windows.Forms.Label label4;
