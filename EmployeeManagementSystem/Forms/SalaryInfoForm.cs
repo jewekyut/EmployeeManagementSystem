@@ -130,5 +130,13 @@ namespace EmployeeManagementSystem
                 txtNetPay.Text = "0.00";
             }
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            EmgContactInfoForm emginfo = new EmgContactInfoForm();
+            this.Hide();
+            emginfo.Show();
+
+        }
     }
 }

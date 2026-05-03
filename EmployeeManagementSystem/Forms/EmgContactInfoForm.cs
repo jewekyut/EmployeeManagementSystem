@@ -86,5 +86,12 @@ namespace EmployeeManagementSystem
                 txtPhilhealthNum.Text = row.Cells["philhealth_num"].Value?.ToString();
             }
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            BasicInfoForm basicinfo = new BasicInfoForm();
+            this.Hide();
+            basicinfo.Show();
+        }
     }
 }

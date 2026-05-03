@@ -83,5 +83,12 @@ namespace EmployeeManagementSystem
                 txtEmpId.Text = row.Cells["emp_id"].Value?.ToString();
             }
         }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            SalaryInfoForm salaryInfo = new SalaryInfoForm();
+            this.Hide();
+            salaryInfo.Show();
+        }
     }
 }

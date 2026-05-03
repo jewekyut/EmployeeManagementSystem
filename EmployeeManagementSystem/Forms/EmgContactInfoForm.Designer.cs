@@ -47,6 +47,7 @@ namespace EmployeeManagementSystem
             this.label6 = new System.Windows.Forms.Label();
             this.basicGridView = new System.Windows.Forms.DataGridView();
             this.btnnext1 = new System.Windows.Forms.Button();
+            this.btnBack = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.basicGridView)).BeginInit();
@@ -226,7 +227,7 @@ namespace EmployeeManagementSystem
             // basicGridView
             // 
             this.basicGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.basicGridView.Location = new System.Drawing.Point(16, 257);
+            this.basicGridView.Location = new System.Drawing.Point(16, 244);
             this.basicGridView.Margin = new System.Windows.Forms.Padding(2);
             this.basicGridView.Name = "basicGridView";
             this.basicGridView.RowHeadersWidth = 62;
@@ -237,7 +238,7 @@ namespace EmployeeManagementSystem
             // 
             // btnnext1
             // 
-            this.btnnext1.Location = new System.Drawing.Point(593, 182);
+            this.btnnext1.Location = new System.Drawing.Point(593, 211);
             this.btnnext1.Margin = new System.Windows.Forms.Padding(2);
             this.btnnext1.Name = "btnnext1";
             this.btnnext1.Size = new System.Drawing.Size(79, 29);
@@ -246,11 +247,23 @@ namespace EmployeeManagementSystem
             this.btnnext1.UseVisualStyleBackColor = true;
             this.btnnext1.Click += new System.EventHandler(this.btnnext1_Click);
             // 
+            // btnBack
+            // 
+            this.btnBack.Location = new System.Drawing.Point(510, 211);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(79, 29);
+            this.btnBack.TabIndex = 24;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // EmgContactInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(705, 434);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnnext1);
             this.Controls.Add(this.basicGridView);
             this.Controls.Add(this.groupBox2);
@@ -288,5 +301,6 @@ namespace EmployeeManagementSystem
         private System.Windows.Forms.Button btnnext1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPhilhealthNum;
+        private System.Windows.Forms.Button btnBack;
     }
 }

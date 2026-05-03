@@ -47,6 +47,7 @@ namespace EmployeeManagementSystem
             this.txtEmpId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.basicGridView = new System.Windows.Forms.DataGridView();
+            this.btnBack = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.basicGridView)).BeginInit();
@@ -242,7 +243,7 @@ namespace EmployeeManagementSystem
             // basicGridView
             // 
             this.basicGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.basicGridView.Location = new System.Drawing.Point(8, 287);
+            this.basicGridView.Location = new System.Drawing.Point(16, 270);
             this.basicGridView.Margin = new System.Windows.Forms.Padding(2);
             this.basicGridView.Name = "basicGridView";
             this.basicGridView.RowHeadersWidth = 62;
@@ -251,11 +252,23 @@ namespace EmployeeManagementSystem
             this.basicGridView.TabIndex = 6;
             this.basicGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.basicGridView_CellContentClick);
             // 
+            // btnBack
+            // 
+            this.btnBack.Location = new System.Drawing.Point(585, 230);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(2);
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(79, 29);
+            this.btnBack.TabIndex = 24;
+            this.btnBack.Text = "Back";
+            this.btnBack.UseVisualStyleBackColor = true;
+            this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
             // HolidayInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(679, 446);
+            this.Controls.Add(this.btnBack);
             this.Controls.Add(this.basicGridView);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -292,5 +305,6 @@ namespace EmployeeManagementSystem
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.ComboBox cmbStatus;
         private System.Windows.Forms.DateTimePicker dtpTimeOut;
+        private System.Windows.Forms.Button btnBack;
     }
 }
