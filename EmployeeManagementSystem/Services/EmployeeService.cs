@@ -108,5 +108,16 @@ namespace EmployeeManagementSystem.Services
                 return await response.Content.ReadAsStringAsync();
             }
         }
+        public async Task<dynamic> GetContributionsAsync(float gross_salary)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(new { gross_salary });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{baseUrl}/getContributions", content);
+                var result = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<dynamic>(result);
+            }
+        }
     }
 }

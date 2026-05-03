@@ -41,13 +41,13 @@ namespace EmployeeManagementSystem
 
             Payroll payroll = new Payroll();
             payroll.emp_username = txtUsername.Text.Trim();
-            payroll.gross_salary = float.Parse(txtGrossSalary.Text.Trim());
-            payroll.sss = float.Parse(txtSss.Text.Trim());
-            payroll.philhealth = float.Parse(txtPhilhealth.Text.Trim());
-            payroll.pagibig = float.Parse(txtPagibig.Text.Trim());
-            payroll.wtax = float.Parse(txtWtax.Text.Trim());
-            payroll.other_deduction = float.Parse(txtOtherDeduction.Text.Trim());
-            payroll.net_pay = float.Parse(txtNetPay.Text.Trim());
+            payroll.gross_salary = string.IsNullOrEmpty(txtGrossSalary.Text) ? 0 : float.Parse(txtGrossSalary.Text.Trim());
+            payroll.sss = string.IsNullOrEmpty(txtSss.Text) ? 0 : float.Parse(txtSss.Text.Trim());
+            payroll.philhealth = string.IsNullOrEmpty(txtPhilhealth.Text) ? 0 : float.Parse(txtPhilhealth.Text.Trim());
+            payroll.pagibig = string.IsNullOrEmpty(txtPagibig.Text) ? 0 : float.Parse(txtPagibig.Text.Trim());
+            payroll.wtax = string.IsNullOrEmpty(txtWtax.Text) ? 0 : float.Parse(txtWtax.Text.Trim());
+            payroll.other_deduction = string.IsNullOrEmpty(txtOtherDeduction.Text) ? 0 : float.Parse(txtOtherDeduction.Text.Trim());
+            payroll.net_pay = string.IsNullOrEmpty(txtNetPay.Text) ? 0 : float.Parse(txtNetPay.Text.Trim());
 
             var result = await service.AddPayrollAsync(payroll);
             var response = JsonConvert.DeserializeObject<dynamic>(result);
@@ -88,6 +88,46 @@ namespace EmployeeManagementSystem
                 DataGridViewRow row = basicGridView.Rows[e.RowIndex];
                 txtUsername.Text = row.Cells["emp_username"].Value?.ToString();
                 txtGrossSalary.Text = row.Cells["gross_salary"].Value?.ToString();
+            }
+        }
+
+        private async void txtGrossSalary_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(txtGrossSalary.Text))
+            {
+                try
+                {
+                    float gross = float.Parse(txtGrossSalary.Text);
+                    var contributions = await service.GetContributionsAsync(gross);
+
+                    if (contributions["status"].ToString() == "success")
+                    {
+                        txtSss.Text = contributions["sss"].ToString();
+                        txtPhilhealth.Text = contributions["philhealth"].ToString();
+                        txtPagibig.Text = contributions["pagibig"].ToString();
+                        ComputeNetPay();
+                    }
+                }
+                catch { }
+            }
+        }
+        private void ComputeNetPay()
+        {
+            try
+            {
+                float gross = string.IsNullOrEmpty(txtGrossSalary.Text) ? 0 : float.Parse(txtGrossSalary.Text);
+                float sss = string.IsNullOrEmpty(txtSss.Text) ? 0 : float.Parse(txtSss.Text);
+                float philhealth = string.IsNullOrEmpty(txtPhilhealth.Text) ? 0 : float.Parse(txtPhilhealth.Text);
+                float pagibig = string.IsNullOrEmpty(txtPagibig.Text) ? 0 : float.Parse(txtPagibig.Text);
+                float wtax = string.IsNullOrEmpty(txtWtax.Text) ? 0 : float.Parse(txtWtax.Text);
+                float otherDeduction = string.IsNullOrEmpty(txtOtherDeduction.Text) ? 0 : float.Parse(txtOtherDeduction.Text);
+
+                float netPay = gross - sss - philhealth - pagibig - wtax - otherDeduction;
+                txtNetPay.Text = netPay.ToString("F2");
+            }
+            catch
+            {
+                txtNetPay.Text = "0.00";
             }
         }
     }

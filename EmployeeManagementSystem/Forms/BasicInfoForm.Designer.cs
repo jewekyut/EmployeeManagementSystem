@@ -120,6 +120,7 @@ namespace EmployeeManagementSystem
             this.txtGrossSalary.Name = "txtGrossSalary";
             this.txtGrossSalary.Size = new System.Drawing.Size(113, 20);
             this.txtGrossSalary.TabIndex = 23;
+            this.txtGrossSalary.TextChanged += new System.EventHandler(this.txtGrossSalary_TextChanged);
             // 
             // txtDepartment
             // 

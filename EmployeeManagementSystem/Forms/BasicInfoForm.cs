@@ -193,5 +193,10 @@ namespace EmployeeManagementSystem
             this.Hide();
             emgcontactinfo.Show();
         }
+
+        private void txtGrossSalary_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

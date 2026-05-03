@@ -103,6 +103,7 @@ namespace EmployeeManagementSystem
             this.txtNetPay.Location = new System.Drawing.Point(110, 250);
             this.txtNetPay.Margin = new System.Windows.Forms.Padding(2);
             this.txtNetPay.Name = "txtNetPay";
+            this.txtNetPay.ReadOnly = true;
             this.txtNetPay.Size = new System.Drawing.Size(113, 20);
             this.txtNetPay.TabIndex = 32;
             // 
@@ -127,6 +128,7 @@ namespace EmployeeManagementSystem
             this.txtPagibig.Location = new System.Drawing.Point(112, 159);
             this.txtPagibig.Margin = new System.Windows.Forms.Padding(2);
             this.txtPagibig.Name = "txtPagibig";
+            this.txtPagibig.ReadOnly = true;
             this.txtPagibig.Size = new System.Drawing.Size(113, 20);
             this.txtPagibig.TabIndex = 29;
             // 
@@ -135,6 +137,7 @@ namespace EmployeeManagementSystem
             this.txtPhilhealth.Location = new System.Drawing.Point(112, 122);
             this.txtPhilhealth.Margin = new System.Windows.Forms.Padding(2);
             this.txtPhilhealth.Name = "txtPhilhealth";
+            this.txtPhilhealth.ReadOnly = true;
             this.txtPhilhealth.Size = new System.Drawing.Size(113, 20);
             this.txtPhilhealth.TabIndex = 28;
             // 
@@ -143,6 +146,7 @@ namespace EmployeeManagementSystem
             this.txtSss.Location = new System.Drawing.Point(112, 92);
             this.txtSss.Margin = new System.Windows.Forms.Padding(2);
             this.txtSss.Name = "txtSss";
+            this.txtSss.ReadOnly = true;
             this.txtSss.Size = new System.Drawing.Size(113, 20);
             this.txtSss.TabIndex = 27;
             // 
@@ -153,6 +157,7 @@ namespace EmployeeManagementSystem
             this.txtGrossSalary.Name = "txtGrossSalary";
             this.txtGrossSalary.Size = new System.Drawing.Size(113, 20);
             this.txtGrossSalary.TabIndex = 26;
+            this.txtGrossSalary.TextChanged += new System.EventHandler(this.txtGrossSalary_TextChanged);
             // 
             // label13
             // 
