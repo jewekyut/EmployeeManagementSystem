@@ -33,7 +33,6 @@ namespace EmployeeManagementSystem
             this.label4 = new System.Windows.Forms.Label();
             this.txtPhilhealthNum = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.txtPagibigNum = new System.Windows.Forms.TextBox();
             this.txtSssNum = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -59,7 +58,6 @@ namespace EmployeeManagementSystem
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.txtPhilhealthNum);
             this.groupBox1.Controls.Add(this.btnSave);
-            this.groupBox1.Controls.Add(this.btnRefresh);
             this.groupBox1.Controls.Add(this.txtPagibigNum);
             this.groupBox1.Controls.Add(this.txtSssNum);
             this.groupBox1.Controls.Add(this.label3);
@@ -103,17 +101,6 @@ namespace EmployeeManagementSystem
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(24, 192);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(2);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(77, 24);
-            this.btnRefresh.TabIndex = 13;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // txtPagibigNum
             // 
@@ -285,7 +272,6 @@ namespace EmployeeManagementSystem
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.TextBox txtPagibigNum;
         private System.Windows.Forms.TextBox txtSssNum;
         private System.Windows.Forms.Label label3;

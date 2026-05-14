@@ -43,7 +43,6 @@ namespace EmployeeManagementSystem
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnRefresh = new System.Windows.Forms.Button();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.txtLastName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -92,7 +91,6 @@ namespace EmployeeManagementSystem
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.btnSave);
-            this.groupBox1.Controls.Add(this.btnRefresh);
             this.groupBox1.Controls.Add(this.txtEmail);
             this.groupBox1.Controls.Add(this.txtLastName);
             this.groupBox1.Controls.Add(this.label5);
@@ -218,17 +216,6 @@ namespace EmployeeManagementSystem
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btnRefresh
-            // 
-            this.btnRefresh.Location = new System.Drawing.Point(24, 327);
-            this.btnRefresh.Margin = new System.Windows.Forms.Padding(2);
-            this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(77, 24);
-            this.btnRefresh.TabIndex = 13;
-            this.btnRefresh.Text = "Refresh";
-            this.btnRefresh.UseVisualStyleBackColor = true;
-            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click_1);
             // 
             // txtEmail
             // 
@@ -376,7 +363,7 @@ namespace EmployeeManagementSystem
             // lblImagePath
             // 
             this.lblImagePath.AutoSize = true;
-            this.lblImagePath.Location = new System.Drawing.Point(140, 272);
+            this.lblImagePath.Location = new System.Drawing.Point(124, 272);
             this.lblImagePath.Name = "lblImagePath";
             this.lblImagePath.Size = new System.Drawing.Size(68, 13);
             this.lblImagePath.TabIndex = 5;
@@ -418,7 +405,6 @@ namespace EmployeeManagementSystem
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.TextBox txtEmpId;

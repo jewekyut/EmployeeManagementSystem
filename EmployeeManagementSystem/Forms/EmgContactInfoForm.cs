@@ -15,7 +15,14 @@ namespace EmployeeManagementSystem
         {
             InitializeComponent();
         }
-
+        private void ClearFields()
+        {
+            txtEmpId.Text = "";
+            txtTinNum.Text = "";
+            txtSssNum.Text = "";
+            txtPagibigNum.Text = "";
+            txtPhilhealthNum.Text = "";
+        }
         private async void EmgContactInfoForm_Load(object sender, EventArgs e)
         {
             await LoadEmployees();
@@ -52,7 +59,7 @@ namespace EmployeeManagementSystem
             else
                 MessageBox.Show("Error updating.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            ClearFields();
             await LoadEmployees();
         }
 

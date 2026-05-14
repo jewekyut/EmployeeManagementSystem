@@ -17,6 +17,14 @@ namespace EmployeeManagementSystem
         {
             InitializeComponent();
         }
+        private void ClearFields()
+        {
+            txtEmpId.Text = "";
+            cmbStatus.SelectedIndex = -1;
+            dtpDate.Value = DateTime.Now;
+            dtpTimeIn.Value = DateTime.Now;
+            dtpTimeOut.Value = DateTime.Now;
+        }
 
         private async void HolidayInfoForm_Load(object sender, EventArgs e)
         {
@@ -62,7 +70,7 @@ namespace EmployeeManagementSystem
             else
                 MessageBox.Show("Error saving attendance.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            ClearFields();
             await LoadEmployees();
         }
 

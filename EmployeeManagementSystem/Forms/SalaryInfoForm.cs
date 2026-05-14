@@ -17,6 +17,17 @@ namespace EmployeeManagementSystem
         {
             InitializeComponent();
         }
+        private void ClearFields()
+        {
+            txtUsername.Text = "";
+            txtGrossSalary.Text = "";
+            txtSss.Text = "";
+            txtPhilhealth.Text = "";
+            txtPagibig.Text = "";
+            txtWtax.Text = "";
+            txtOtherDeduction.Text = "";
+            txtNetPay.Text = "";
+        }
 
         private async void SalaryInfoForm_Load(object sender, EventArgs e)
         {
@@ -58,7 +69,7 @@ namespace EmployeeManagementSystem
             else
                 MessageBox.Show("Error saving payroll.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            ClearFields();
             await LoadEmployees();
         }
 
@@ -195,7 +206,7 @@ namespace EmployeeManagementSystem
                 else
                     MessageBox.Show("Error deleting payroll.", "Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                ClearFields();
                 await LoadEmployees();
             }
 

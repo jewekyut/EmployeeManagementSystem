@@ -18,6 +18,21 @@ namespace EmployeeManagementSystem
         {
             InitializeComponent();
         }
+        private void ClearFields()
+        {
+            txtFirstName.Text = "";
+            txtLastName.Text = "";
+            txtMiddleName.Text = "";
+            txtUsername.Text = "";
+            txtEmail.Text = "";
+            txtContact.Text = "";
+            txtPosition.Text = "";
+            txtDepartment.Text = "";
+            txtGrossSalary.Text = "";
+            txtEmpId.Text = "";
+            selectedImagePath = "";
+            lblImagePath.Text = "";
+        }
 
         private async void BasicInformation_Load(object sender, EventArgs e)
         {
@@ -79,6 +94,7 @@ namespace EmployeeManagementSystem
 
                 selectedImagePath = "";
                 lblImagePath.Text = "";
+                ClearFields();
                 await LoadEmployees();
             }
             else
@@ -117,7 +133,7 @@ namespace EmployeeManagementSystem
             else
                 MessageBox.Show("Error updating employee.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+            ClearFields();
             await LoadEmployees();
         }
 
@@ -206,7 +222,12 @@ namespace EmployeeManagementSystem
                 txtDepartment.Text = row.Cells["department"].Value?.ToString();
                 txtGrossSalary.Text = row.Cells["gross_salary"].Value?.ToString();
 
-                string imagePath = row.Cells["emp_image_path"].Value?.ToString();
+                try
+                {
+                    string imagePath = row.Cells["emp_image_path"].Value?.ToString();
+                    lblImagePath.Text = !string.IsNullOrEmpty(imagePath) ? imagePath : "";
+                }
+                catch { lblImagePath.Text = ""; }
             }
         }
 
