@@ -138,5 +138,67 @@ namespace EmployeeManagementSystem
             emginfo.Show();
 
         }
+
+        private async void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtEmpId.Text))
+            {
+                MessageBox.Show("Please enter ID", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Payroll payroll = new Payroll();
+            payroll.id = Convert.ToInt32(txtEmpId.Text.Trim());
+            payroll.gross_salary = string.IsNullOrEmpty(txtGrossSalary.Text) ? 0 : float.Parse(txtGrossSalary.Text.Trim());
+            payroll.sss = string.IsNullOrEmpty(txtSss.Text) ? 0 : float.Parse(txtSss.Text.Trim());
+            payroll.philhealth = string.IsNullOrEmpty(txtPhilhealth.Text) ? 0 : float.Parse(txtPhilhealth.Text.Trim());
+            payroll.pagibig = string.IsNullOrEmpty(txtPagibig.Text) ? 0 : float.Parse(txtPagibig.Text.Trim());
+            payroll.wtax = string.IsNullOrEmpty(txtWtax.Text) ? 0 : float.Parse(txtWtax.Text.Trim());
+            payroll.other_deduction = string.IsNullOrEmpty(txtOtherDeduction.Text) ? 0 : float.Parse(txtOtherDeduction.Text.Trim());
+            payroll.net_pay = string.IsNullOrEmpty(txtNetPay.Text) ? 0 : float.Parse(txtNetPay.Text.Trim());
+
+            var result = await service.UpdatePayrollAsync(payroll);
+            var response = JsonConvert.DeserializeObject<dynamic>(result);
+
+            if (response["status"].ToString() == "success")
+                MessageBox.Show("Payroll updated successfully!", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show("Error updating payroll.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            await LoadEmployees();
+        }
+
+        private async void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtEmpId.Text))
+            {
+                MessageBox.Show("Please enter ID", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var confirmResult = MessageBox.Show("Are you sure you want to delete this payroll?",
+                "Confirm Delete", MessageBoxButtons.YesNo);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                int id = Convert.ToInt32(txtEmpId.Text.Trim());
+                var result = await service.DeletePayrollAsync(id);
+                var response = JsonConvert.DeserializeObject<dynamic>(result);
+
+                if (response["status"].ToString() == "success")
+                    MessageBox.Show("Payroll deleted successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    MessageBox.Show("Error deleting payroll.", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                await LoadEmployees();
+            }
+
+        }
     }
 }

@@ -11,13 +11,13 @@ namespace EmployeeManagementSystem.Services
     public class EmployeeService
     {
         private static readonly HttpClient client = new HttpClient();
-        private const string baseUrl = "http://localhost/codeigniter-payroll-project/index.php/employeeapi";
+        private const string baseUrl = "http://localhost/payroll-api/index.php?endpoint";
 
         public async Task<List<Employee>> GetEmployeesAsync()
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetStringAsync($"{baseUrl}/getEmployees");
+                var response = await client.GetStringAsync($"{baseUrl}=getEmployees");
                 return JsonConvert.DeserializeObject<List<Employee>>(response);
             }
         }
@@ -28,7 +28,7 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(emp);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/addEmployee", content);
+                var response = await client.PostAsync($"{baseUrl}=addEmployee", content);
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -39,7 +39,7 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(emp);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/updateEmployee", content);
+                var response = await client.PostAsync($"{baseUrl}=updateEmployee", content);
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -50,7 +50,7 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(new { emp_id });
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/deleteEmployee", content);
+                var response = await client.PostAsync($"{baseUrl}=deleteEmployee", content);
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -60,7 +60,7 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(emp);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/updateGovNumbers", content);
+                var response = await client.PostAsync($"{baseUrl}=updateGovNumbers", content);
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -70,7 +70,7 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(new { emp_username });
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/getPayroll", content);
+                var response = await client.PostAsync($"{baseUrl}=getPayroll", content);
                 var result = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<List<Payroll>>(result);
             }
@@ -82,7 +82,7 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(payroll);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/addPayroll", content);
+                var response = await client.PostAsync($"{baseUrl}=addPayroll", content);
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -92,7 +92,7 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(new { emp_id });
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/getAttendance", content);
+                var response = await client.PostAsync($"{baseUrl}=getAttendance", content);
                 var result = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<List<Attendance>>(result);
             }
@@ -104,7 +104,7 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(attendance);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/addAttendance", content);
+                var response = await client.PostAsync($"{baseUrl}=addAttendance", content);
                 return await response.Content.ReadAsStringAsync();
             }
         }
@@ -114,10 +114,32 @@ namespace EmployeeManagementSystem.Services
             {
                 var json = JsonConvert.SerializeObject(new { gross_salary });
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"{baseUrl}/getContributions", content);
+                var response = await client.PostAsync($"{baseUrl}=getContributions", content);
                 var result = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<dynamic>(result);
             }
         }
+        public async Task<string> UpdatePayrollAsync(Payroll payroll)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(payroll);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{baseUrl}=updatePayroll", content);
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+
+        public async Task<string> DeletePayrollAsync(int emp_username)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(new { emp_username });
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{baseUrl}=deletePayroll", content);
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+
     }
 }
