@@ -2,14 +2,17 @@
 using EmployeeManagementSystem.Services;
 using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace EmployeeManagementSystem
 {
     public partial class BasicInfoForm : Form
     {
         EmployeeService service = new EmployeeService();
+        private string selectedImagePath = "";
 
         public BasicInfoForm()
         {
@@ -43,14 +46,46 @@ namespace EmployeeManagementSystem
             var result = await service.AddEmployeeAsync(emp);
             var response = JsonConvert.DeserializeObject<dynamic>(result);
 
-            if (response["status"] == "success")
-                MessageBox.Show("Employee saved successfully!", "Success",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (response["status"].ToString() == "success")
+            {
+                // Upload image if selected
+                if (!string.IsNullOrEmpty(selectedImagePath))
+                {
+                    int newId = response["id"] != null ? (int)response["id"] : 0;
+
+                    if (newId > 0)
+                    {
+                        var imgResult = await service.UploadImageAsync(newId, selectedImagePath);
+                        var imgResponse = JsonConvert.DeserializeObject<dynamic>(imgResult);
+
+                        if (imgResponse["status"].ToString() == "success")
+                            MessageBox.Show("Employee saved with image!", "Success",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        else
+                            MessageBox.Show("Employee saved but image upload failed.", "Warning",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Employee saved but couldn't get ID for image.", "Warning",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Employee saved successfully!", "Success",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                selectedImagePath = "";
+                lblImagePath.Text = "";
+                await LoadEmployees();
+            }
             else
+            {
                 MessageBox.Show("Error saving employee.", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            await LoadEmployees();
+            }
         }
 
         private async void btnUpdate_Click(object sender, EventArgs e)
@@ -170,6 +205,8 @@ namespace EmployeeManagementSystem
                 txtPosition.Text = row.Cells["position"].Value?.ToString();
                 txtDepartment.Text = row.Cells["department"].Value?.ToString();
                 txtGrossSalary.Text = row.Cells["gross_salary"].Value?.ToString();
+
+                string imagePath = row.Cells["emp_image_path"].Value?.ToString();
             }
         }
 
@@ -197,6 +234,20 @@ namespace EmployeeManagementSystem
         private void txtGrossSalary_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnBrowseImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif";
+            openFile.Title = "Select Employee Image";
+
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                selectedImagePath = openFile.FileName;
+                lblImagePath.Text = Path.GetFileName(selectedImagePath);
+      
+            }
         }
     }
 }

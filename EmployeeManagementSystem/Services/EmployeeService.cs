@@ -1,10 +1,12 @@
 ﻿using EmployeeManagementSystem.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace EmployeeManagementSystem.Services
 {
@@ -137,6 +139,23 @@ namespace EmployeeManagementSystem.Services
                 var json = JsonConvert.SerializeObject(new { emp_username });
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync($"{baseUrl}=deletePayroll", content);
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+        public async Task<string> UploadImageAsync(int emp_id, string imagePath)
+        {
+            using (var client = new HttpClient())
+            using (var form = new MultipartFormDataContent())
+            {
+                var imageContent = new ByteArrayContent(File.ReadAllBytes(imagePath));
+                imageContent.Headers.ContentType =
+                    new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+
+                form.Add(imageContent, "image", Path.GetFileName(imagePath));
+                form.Add(new StringContent(emp_id.ToString()), "emp_id");
+
+                var response = await client.PostAsync(
+                    "http://localhost/payroll-api/index.php?endpoint=uploadImage", form);
                 return await response.Content.ReadAsStringAsync();
             }
         }

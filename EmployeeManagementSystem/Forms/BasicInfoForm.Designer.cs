@@ -57,6 +57,8 @@ namespace EmployeeManagementSystem
             this.txtEmpId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.basicGridView = new System.Windows.Forms.DataGridView();
+            this.btnBrowseImage = new System.Windows.Forms.Button();
+            this.lblImagePath = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.basicGridView)).BeginInit();
@@ -76,6 +78,8 @@ namespace EmployeeManagementSystem
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.groupBox1.Controls.Add(this.lblImagePath);
+            this.groupBox1.Controls.Add(this.btnBrowseImage);
             this.groupBox1.Controls.Add(this.txtPosition);
             this.groupBox1.Controls.Add(this.txtGrossSalary);
             this.groupBox1.Controls.Add(this.txtDepartment);
@@ -359,6 +363,25 @@ namespace EmployeeManagementSystem
             this.basicGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.basicGridView_CellClick);
             this.basicGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.basicGridView_CellContentClick);
             // 
+            // btnBrowseImage
+            // 
+            this.btnBrowseImage.Location = new System.Drawing.Point(24, 267);
+            this.btnBrowseImage.Name = "btnBrowseImage";
+            this.btnBrowseImage.Size = new System.Drawing.Size(89, 23);
+            this.btnBrowseImage.TabIndex = 5;
+            this.btnBrowseImage.Text = "Browse Image";
+            this.btnBrowseImage.UseVisualStyleBackColor = true;
+            this.btnBrowseImage.Click += new System.EventHandler(this.btnBrowseImage_Click);
+            // 
+            // lblImagePath
+            // 
+            this.lblImagePath.AutoSize = true;
+            this.lblImagePath.Location = new System.Drawing.Point(140, 272);
+            this.lblImagePath.Name = "lblImagePath";
+            this.lblImagePath.Size = new System.Drawing.Size(68, 13);
+            this.lblImagePath.TabIndex = 5;
+            this.lblImagePath.Text = "lblImagePath";
+            // 
             // BasicInfoForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -412,5 +435,7 @@ namespace EmployeeManagementSystem
         private System.Windows.Forms.TextBox txtContact;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPosition;
+        private System.Windows.Forms.Label lblImagePath;
+        private System.Windows.Forms.Button btnBrowseImage;
     }
 }
